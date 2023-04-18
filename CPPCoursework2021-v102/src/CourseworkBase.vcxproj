@@ -98,6 +98,7 @@
     <ClInclude Include="FlashingDemo.h" />
     <ClInclude Include="ImageMappingDemo.h" />
     <ClInclude Include="SimpleFlashingDragableImageObject.h" />
+    <ClInclude Include="SnakeObject.h" />
     <ClInclude Include="StarfieldDemo.h" />
     <ClInclude Include="States.h" />
     <ClInclude Include="UtilCollisionDetection.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="SimpleImage.cpp" />
     <ClCompile Include="SimpleDemo.cpp" />
+    <ClCompile Include="SnakeObject.cpp" />
     <ClCompile Include="StarfieldDemo.cpp" />
     <ClCompile Include="States.cpp" />
     <ClCompile Include="TileManager.cpp" />

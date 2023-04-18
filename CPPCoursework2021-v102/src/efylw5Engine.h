@@ -2,6 +2,8 @@
 #include "header.h"
 #include "BaseEngine.h"
 #include "States.h"
+#include "SnakeObject.h"
+
 #define STARTUP 1;
 #define PAUSE 2;
 #define RUNNING 3;
@@ -23,7 +25,9 @@ public:
 
     ~efylw5Engine()
     {
+
         free(currentState);
+
     }
 
     int getState() { return state; }
@@ -36,8 +40,17 @@ public:
 
     void setCurrentState(States* state) { currentState = state; }
 
+    void virtKeyDown(int iKeyCode);
+
+    States* currentState = new startingState();
+
+    void virtDrawStringsUnderneath();
+
+    void virtDrawStringsOnTop();
+
+    int virtInitialiseObjects();
+
 private:
     int state;
-    States* currentState = new startingState();
 };
 
