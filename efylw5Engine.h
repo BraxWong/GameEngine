@@ -6,6 +6,7 @@
 #include "HSObjectL.h"
 #include "HSObjectR.h"
 #include "MovingText.h"
+#include "Targets.h"
 #include <fstream>
 
 #define STARTUP 1;
@@ -19,14 +20,17 @@ class efylw5Engine :
 {
 public:
 
-
-
     //When the engine starts, it will be at the STARTUP state
-    efylw5Engine() 
+    efylw5Engine()
     {
-        state = STARTUP;
-        returnToTutorial = true;
-        returnToGame = true;
+            point = 0;
+            mouseLifted = NULL;
+            state = STARTUP;
+            returnToTutorial = true;
+            returnToGame = true;
+            clickX = 0;
+            clickY = 0;
+            so = NULL;
 
     }
 
@@ -36,6 +40,11 @@ public:
         free(currentState);
 
     }
+    int getPoint() { return point; }
+
+    int getClickX() { return clickX; }
+
+    int getClickY() { return clickY; }
 
     int getState() { return state; }
 
@@ -47,11 +56,17 @@ public:
 
     void setName(std::string n) { name += n; }
 
+    void setPoint(int pt) { point = pt; }
+
     void deleteName();
 
     void virtSetupBackgroundBuffer();
 
-    void setSnakeHead(SnakeHead* sh) { so = sh; }
+    void setClickX(int x) { clickX = x; }
+
+    void setClickY(int y) { clickY = y; }
+
+    //void setSnakeHead(SnakeHead* sh) { so = sh; }
 
     States* getCurrentState() { return currentState; }
 
@@ -59,17 +74,19 @@ public:
 
     void virtKeyDown(int iKeyCode);
 
+    void virtMouseDown(int iButton, int iX, int iY);
+
+    void virtMouseUp(int iButton, int iX, int iY);
+
     void addPlayerName();
 
-    States* currentState = new highscoreState(this);
+    States* currentState = new startingState(this);
 
     void virtDrawStringsUnderneath();
 
     void virtDrawStringsOnTop();
 
     void drawTable();
-
-    void setUpForegroundEffectHS();
 
     //read a file that contains all the score. Use a sorting helper function,
     //then pull out the top 5 scores
@@ -81,14 +98,18 @@ public:
 
     bool getReturnToGame() { return returnToGame; }
 
+    bool getMouseLifted() { return mouseLifted; }
+
     SnakeHead* getSnakeObject() { return so; }
 
     std::string getName() { return name; }
 
 private:
-    int state;
-    bool returnToTutorial, returnToGame;
+    int clickX, clickY;
+    int state, point;
+    bool returnToTutorial, returnToGame, mouseLifted;
     SnakeHead* so;
     std::string name;
 };
+
 

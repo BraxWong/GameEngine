@@ -96,6 +96,7 @@
     <ClInclude Include="DraggingDemo.h" />
     <ClInclude Include="efylw5Engine.h" />
     <ClInclude Include="FlashingDemo.h" />
+    <ClInclude Include="HitMarker.h" />
     <ClInclude Include="HSObjectL.h" />
     <ClInclude Include="HSObjectR.h" />
     <ClInclude Include="ImageMappingDemo.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="SnakeObject.h" />
     <ClInclude Include="StarfieldDemo.h" />
     <ClInclude Include="States.h" />
+    <ClInclude Include="Targets.h" />
     <ClInclude Include="UtilCollisionDetection.h" />
     <ClInclude Include="DisplayableObjectContainer.h" />
     <ClInclude Include="ExampleDragableObjects.h" />
@@ -136,6 +138,7 @@
     <ClCompile Include="DrawingSurface.cpp" />
     <ClCompile Include="efylw5Engine.cpp" />
     <ClCompile Include="FlashingDemo.cpp" />
+    <ClCompile Include="HitMarker.cpp" />
     <ClCompile Include="HSObjectL.cpp" />
     <ClCompile Include="HSObjectR.cpp" />
     <ClCompile Include="ImageMappingDemo.cpp" />
@@ -149,6 +152,7 @@
     <ClCompile Include="SnakeObject.cpp" />
     <ClCompile Include="StarfieldDemo.cpp" />
     <ClCompile Include="States.cpp" />
+    <ClCompile Include="Targets.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="BouncingBall.cpp" />
     <ClCompile Include="BouncingBallMain.cpp" />

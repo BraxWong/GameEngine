@@ -71,9 +71,9 @@ public:
     startingState(efylw5Engine* e)
     {
         setEngine(e);
-        std::vector<int> x = { 475, 485 };
+        std::vector<int> x = { 475, 510 };
         std::vector<int> y = {250, 450};
-        std::vector<char*> s = {"Welcome to Snake Game!", "Press Enter to Start!"};
+        std::vector<char*> s = {"Welcome to Sharp Shooter!", "Press Enter to Start!"};
         setCoordX(x);
         setCoordY(y);
         setStr(s);
@@ -99,10 +99,10 @@ class tutorialState : public States
 public:
     tutorialState()
     {
-        std::vector<int> x = { 375, 125, 345, 30, 430 };
-        std::vector<int> y = { 100, 750, 325, 150, 600 };
+        std::vector<int> x = { 375, 125, 345, 30, 270, 330, 430 };
+        std::vector<int> y = { 100, 750, 225, 150, 400,500, 600 };
         std::vector<char*> s = { "Here is the tutorial before you start.", "If you want to leave the game. Press the ESC button on your keyboard.", "You will have 5 minutes to play the game." 
-            ,"If you can reach a certain amount of points.You will win!If not, you will lose.ENJOY!", "Press the spacebar to begin."};
+            ,"If you can reach a certain amount of points.You will win!If not, you will lose.ENJOY!","Click on the target that shows up on the screen.", "Red(+10), Blue(+20),Gold (+100),Black(-20)", "Press the spacebar to begin."};
         setCoordX(x);
         setCoordY(y);
         setStr(s);
@@ -129,7 +129,7 @@ public:
 class runningState : public States
 {
 public:
-    runningState(SnakeHead* sObject, efylw5Engine* ptrEngine):
+    runningState(efylw5Engine* ptrEngine):
         ptrEngine(ptrEngine)
     {
         std::vector<int> x = { 0, 1140 };
@@ -139,7 +139,6 @@ public:
         setCoordY(y);
         setStr(s);
         setImageURL("gameBackground.jpg");
-        so = sObject;
         setState(3);
 
     }
@@ -154,7 +153,6 @@ public:
 
 
 private:
-    SnakeHead* so;
     efylw5Engine* ptrEngine;
     int state = 3;
 };

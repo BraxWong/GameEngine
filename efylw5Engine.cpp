@@ -1,5 +1,4 @@
 #include "efylw5Engine.h"
-
 /**
 	Class: efylw5Engine
 	Function: deleteName()
@@ -40,11 +39,6 @@ void efylw5Engine::drawTable()
 	drawBackgroundRectangle(655, 180, 699, 600, 0xFFFFFF);
 }
 
-void efylw5Engine::setUpForegroundEffectHS()
-{
-	
-}
-
 /**
 	Class: efylw5Engine
 	Function: populateTable()
@@ -69,9 +63,10 @@ void efylw5Engine::populateTable()
 		y += 70;
 	}
 }
+
+
 void efylw5Engine::virtSetupBackgroundBuffer()
 {
-	
 	if (getCurrentState()->getState() == 6) {
 		drawTable();
 	
@@ -80,6 +75,26 @@ void efylw5Engine::virtSetupBackgroundBuffer()
 		SimpleImage image = ImageManager::loadImage(getCurrentState()->getImageURL(), true);
 		image.renderImage(this->getBackgroundSurface(), 0, 0, 0, 0, 1300, 800);
 	}
+
+}
+
+void efylw5Engine::virtMouseDown(int iButton, int iX, int iY)
+{
+	drawBackgroundLine(iX - 10, iY, iX + 10, iY, 0xFFFFFF);
+	drawBackgroundLine(iX, iY - 10, iX, iY + 10, 0xFFFFFF);
+	setClickX(iX);
+	setClickY(iY);
+	std::cout << "iX: " << iX << " iY: " << iY << "\n";
+	//so->printCurrentLocation();
+}
+
+void efylw5Engine::virtMouseUp(int iButton, int iX, int iY)
+{
+
+	drawBackgroundLine(getClickX() - 10, getClickY(), getClickX() + 10, getClickY(), 0x000000);
+	drawBackgroundLine(getClickX(), getClickY() - 10, getClickX(), getClickY() + 10, 0x000000);
+	lockAndSetupBackground();
+	redrawDisplay();
 
 }
 
@@ -135,6 +150,7 @@ void efylw5Engine::virtKeyDown(int iKeyCode)
 			break;
 		case SDLK_r:
 			if(getCurrentState()->getState() == 6){
+				this->name = "";
 				storeObjectInArray(0, new SnakeHead(this, 10, 10, 125, 0, 125, 800, nullptr));
 				storeObjectInArray(1, new SnakeHead(this, 30, 30, 1175, 0, 1175, 800, nullptr));
 				efylw5Engine::setCurrentState(new startingState(this));
@@ -192,17 +208,14 @@ void efylw5Engine::virtKeyDown(int iKeyCode)
 		case SDLK_ESCAPE:
 			destroyOldObjects(true);
 			setExitWithCode(1);
+			break;
 		case SDLK_SPACE:
 			//Avoid multiple snakeObject from spawning without gaining a point and make sure you can't skip the tutorial state
 			if (returnToGame && getCurrentState()->getState() == 2) {
 				setReturnToGame(false);
-				FoodObject* fo = new FoodObject(this, 300, 300, 200, 220, 200, 220);
-				so = new SnakeHead(this, 30, 30, 10, 10, 1290, 10,fo);
-				appendObjectToArray(fo);
-				this->setSnakeHead(so);
-				efylw5Engine::setCurrentState(new runningState(this->so,this));
+				efylw5Engine::setCurrentState(new runningState(this));
+				appendObjectToArray(new Targets(this, 30, 30));
 				setState(3);
-				appendObjectToArray(so);
 				lockAndSetupBackground();
 				redrawDisplay();
 			}
@@ -230,19 +243,21 @@ void efylw5Engine::virtKeyDown(int iKeyCode)
 				}
 			}
 			break;
-		case SDLK_n:
+		case SDLK_n:;
 			if (getCurrentState()->getState() == 1) {
 				setName("n");
 			}
 			else {
-				SnakeBody* sb = new SnakeBody(this, so, 40, 40, 0, 0, 0, 0, 1);
+				/*SnakeBody* sb = new SnakeBody(this, so, 40, 40, 0, 0, 0, 0, 1);
 				appendObjectToArray(sb);
 				std::vector<SnakeBody*> sc = so->getSnakeBodyCoords();
 				sc.push_back(sb);
 				so->setSnakeBodyCoords(sc);
-				so->setBodyCount(so->getBodyCount() + 1);
+				so->setBodyCount(so->getBodyCount() + 1);*/
 			}
 			break;
+
+
 	}
 	
 }
@@ -286,7 +301,6 @@ void efylw5Engine::virtDrawStringsOnTop()
 	}
 	if (getCurrentState()->getState() == 6) {
 		populateTable();
-		setUpForegroundEffectHS();
 	}
 }
 
@@ -300,9 +314,10 @@ int efylw5Engine::virtInitialiseObjects()
 	
 	if(getCurrentState()->getState() == 1)
 	{
-		storeObjectInArray(0, new SnakeHead(this,10,10, 125, 0, 125, 800, nullptr));
+		storeObjectInArray(0, this->so = new SnakeHead(this,10,10, 125, 0, 125, 800, nullptr));
 
 		storeObjectInArray(1, new SnakeHead(this,30,30, 1175, 0, 1175, 800, nullptr));
+
 	}
 	else if(getCurrentState()->getState() == 6)
 	{
@@ -312,7 +327,7 @@ int efylw5Engine::virtInitialiseObjects()
 
 		storeObjectInArray(3, new HSObjectR(this,20,20,1020,100,1220,50));
 
-		storeObjectInArray(4, new MovingText(this, 20, 20, 1020, 100, 1220, 50));
+		storeObjectInArray(4, new MovingText(this,20,20,1020,100,1220,50));
 	}
 
 	setAllObjectsVisible(true);

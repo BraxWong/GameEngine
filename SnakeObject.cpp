@@ -176,19 +176,10 @@ void SnakeHead::virtDraw()
 
 	int iSize = 10;
 	
-
-	if (collision) {
-
-		collision = false;
-		char buf[128];
-		sprintf(buf, "CONTACT!");
-		ptrEngine->drawForegroundString(m_iCurrentScreenX + 100, m_iCurrentScreenY, buf, 0x00ffff, NULL);
-		redrawDisplay();
-	}
-
 	ptrEngine->drawForegroundOval(m_iCurrentScreenX - iSize, m_iCurrentScreenY - iSize, m_iCurrentScreenX + iSize - 1, m_iCurrentScreenY + iSize - 1, 0x00FF00);
 
 	if (ptrEngine->getCurrentState()->getState() == 3) {
+
 		static std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 		static std::chrono::steady_clock::time_point end = start + std::chrono::seconds(300);
 

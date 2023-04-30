@@ -144,6 +144,12 @@
     <ClInclude Include="MovingText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HitMarker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Targets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainfunction.cpp">
@@ -216,6 +222,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MovingText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HitMarker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
