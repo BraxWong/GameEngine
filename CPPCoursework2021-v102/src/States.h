@@ -1,19 +1,26 @@
 #pragma once
 #include "header.h"
+#include "SnakeObject.h"
 #include <vector>
+#include <unordered_map>
+
 class States
 {
 public:
 
-    void setCoordX(std::vector<int> num) { coordX = num; }
+    inline void setCoordX(std::vector<int> num) { coordX = num; }
 
-    void setCoordY(std::vector<int> num) { coordY = num; }
+    inline void setCoordY(std::vector<int> num) { coordY = num; }
 
     void setStr(std::vector<char*> s) { str = s; }
 
     void setImageURL(std::string URL) { imageURL = URL; }
 
-    void setChangeImage(bool var) { changeImage = var; }
+    void setState(int s) { state = s; }
+
+    virtual void setBackground();
+
+    void setEngine(efylw5Engine* e) { ptrEngine = e; }
 
     std::vector<int> getCoordX() { return coordX; }
 
@@ -23,7 +30,13 @@ public:
 
     std::string getImageURL() { return imageURL; }
 
-    bool getChangeImage() { return changeImage; }
+    virtual std::vector<std::pair<std::string, int>>  getScores();
+
+    virtual std::vector<std::pair<std::string,int>> sortScores(std::vector<std::pair<std::string, int>> map);
+
+    efylw5Engine* getEngine() { return ptrEngine; }
+
+    int getState() { return state; }
     
     template <class T>
     void freeVector(std::vector<T> &v) 
@@ -48,24 +61,24 @@ private:
     std::vector<int> coordY;
     std::vector<char*> str;
     std::string imageURL;
-    bool changeImage;
+    int state = 0;
+    efylw5Engine* ptrEngine = NULL;
 };
 
 class startingState : public States
 {
 public:
-    startingState() 
+    startingState(efylw5Engine* e)
     {
-
-        std::vector<int> x = { 475, 485 };
-        std::vector<int> y = {250, 450};
-        std::vector<char*> s = {"Welcome to Snake Game!", "Press Enter to Start!"};
+        setEngine(e);
+        std::vector<int> x = { 475, 510, 390, 790};
+        std::vector<int> y = { 250, 450, 610, 610};
+        std::vector<char*> s = {"Welcome to Sharp Shooter!", "Press Enter to Start!", "Credits", "Tutorial"};
         setCoordX(x);
         setCoordY(y);
         setStr(s);
         setImageURL("Image1.jpg");
-        setChangeImage(false);
-
+        setState(1);
     }
 
     ~startingState()
@@ -74,7 +87,11 @@ public:
         freeVector(getCoordY());
         freeVector(getStr());
     }
-    
+
+    void setBackground() override;
+private:
+    int state = 1;
+
 };
 
 class tutorialState : public States
@@ -82,15 +99,15 @@ class tutorialState : public States
 public:
     tutorialState()
     {
-        std::vector<int> x = { 375, 125, 345, 30, 430 };
-        std::vector<int> y = { 100, 750, 325, 150, 600 };
+        std::vector<int> x = { 375, 125, 345, 30, 270, 170, 430 };
+        std::vector<int> y = { 100, 750, 225, 150, 400,500, 600 };
         std::vector<char*> s = { "Here is the tutorial before you start.", "If you want to leave the game. Press the ESC button on your keyboard.", "You will have 5 minutes to play the game." 
-            ,"If you can reach a certain amount of points.You will win!If not, you will lose.ENJOY!", "Press the spacebar to begin."};
+            ,"If you can reach a certain amount of points.You will win!If not, you will lose.ENJOY!","Click on the target that shows up on the screen.", "10 pts target, 20 pts target, 100 pts targert, and -20 pts target", "Press the spacebar to begin."};
         setCoordX(x);
         setCoordY(y);
         setStr(s);
         setImageURL("Rules.jpg");
-        setChangeImage(false);
+        setState(2);
     }
     ~tutorialState()
     {
@@ -98,9 +115,10 @@ public:
         freeVector(getCoordY());
         freeVector(getStr());
     }
-
+    void setBackground() override;
     
 private:
+    int state = 2;
 };
 class pausingState : public States
 {
@@ -111,15 +129,18 @@ public:
 class runningState : public States
 {
 public:
-    runningState()
+    runningState(efylw5Engine* ptrEngine):
+        ptrEngine(ptrEngine)
     {
-        std::vector<int> x = { 475 };
-        std::vector<int> y = { 250 };
-        std::vector<char*> s = { "Player Score: ", "Timer: "};
+        std::vector<int> x = { 0, 1140 };
+        std::vector<int> y = { 0, 0};
+        std::vector<char*> s = { "Player Score: ", "Timer:" };
         setCoordX(x);
         setCoordY(y);
         setStr(s);
-        setChangeImage(false);
+        setImageURL("gameBackground.jpg");
+        setState(3);
+
     }
 
     ~runningState()
@@ -128,18 +149,126 @@ public:
         freeVector(getCoordY());
         freeVector(getStr());
     }
+    void setBackground() override;
 
+
+private:
+    efylw5Engine* ptrEngine;
+    int state = 3;
 };
 
 class winningState : public States
 {
 public:
 
+    winningState(efylw5Engine* ptrEngine):
+        ptrEngine(ptrEngine)
+    {
+        std::vector<int> x = { 550 };
+        std::vector<int> y = { 400 };
+        std::vector<char*> s = { "Your Score is:  "};
+        setCoordX(x);
+        setCoordY(y);
+        setStr(s);
+        setImageURL("Image1.jpg");
+        setState(4);
+    }
+
+    ~winningState()
+    {
+        freeVector(getCoordX());
+        freeVector(getCoordY());
+        freeVector(getStr());
+    }
+    void setBackground() override;
+private:
+    efylw5Engine* ptrEngine;
+    int state = 4;
 };
 
 class losingState : public States
 {
 public:
+    losingState()
+    {
+        std::vector<int> x = { 595, 125, 1200};
+        std::vector<int> y = { 300, 500, 750};
+        std::vector<char*> s = { "You lose.","Find the hidden number within the screen to get an additional 100 points.", "NG15EN"};
+        setCoordX(x);
+        setCoordY(y);
+        setStr(s);
+        setImageURL("Rules.jpg");
+        setState(5);
+    }
 
+    ~losingState()
+    {
+        freeVector(getCoordX());
+        freeVector(getCoordY());
+        freeVector(getStr());
+    }
+    void setBackground() override;
+private:
+    int state = 5;
+};
+
+class highscoreState : public States
+{
+public:
+
+
+    //Obtain the records from populateTable(), then sort the records,
+    //then return the top 5 scores
+    std::vector<std::pair<std::string, int>> getScores() override;
+
+    std::vector<std::pair<std::string, int>> sortScores(std::vector<std::pair<std::string, int>> map) override;
+
+    highscoreState(efylw5Engine* ptrEngine) :
+        e(ptrEngine)
+    {
+        std::vector<int> x = { 553, 470, 790, 400 };
+        std::vector<int> y = { 100, 200, 200, 700 };
+        std::vector<char*> s = {"HighScore Table", "Player", "Score", "Press R to go back to the main menu"};
+        setCoordX(x);
+        setCoordY(y);
+        setStr(s);
+        setState(6);
+        setImageURL("blackScreen.png");
+    }
+   
+    ~highscoreState() {
+
+    }
+
+
+private:
+    efylw5Engine* e;
+    int state = 6;
+};
+
+class creditState : public States
+{
+public:
+
+    creditState(efylw5Engine* ptrEngine) :
+        e(ptrEngine)
+    {
+        std::vector<int> x = { 553, 470, 790, 400 };
+        std::vector<int> y = { 100, 200, 200, 700 };
+        std::vector<char*> s = { "HighScore Table", "Player", "Score", "Press R to go back to the main menu" };
+        setCoordX(x);
+        setCoordY(y);
+        setStr(s);
+        setState(7);
+    }
+
+    ~creditState() {
+
+    }
+
+
+private:
+    efylw5Engine* e;
+    int state = 7;
 };
 

@@ -33,7 +33,6 @@ void StarfieldDemo::virtSetupBackgroundBuffer()
 }
 
 
-
 // This forces a screen redraw every pass through the loop.
 void StarfieldDemo::virtMainLoopDoBeforeUpdate()
 {

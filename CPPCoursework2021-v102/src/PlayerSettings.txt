@@ -1,0 +1,8 @@
+Crosshair Color(1 = White, 2 = Red, 3 = Purple, 4 = Orange):2
+Crosshair Size(Max Size 15, Min Size 5) :10
+Target Shapes(1 = Circles or 2 = Rectangle):1
+10 Points Target Color(1 = Orange-Yellow, 2 = Yellow, 3 = Pink, 4 = Red):1
+20 Points Target Color(1 = Brown, 2 = Peach, 3 = Sepia, 4 = Blue):4
+100 Points Target Color(1 = Mahogany, 2 = Gold, 3 = Apricot, 4 = Red-Violet):2
+Difficulty(1 = Easy, 2 = Medium, 3 = Hard):2
+Time Limits(seconds):10

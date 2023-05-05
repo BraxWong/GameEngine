@@ -1,5 +1,18 @@
-﻿  efylw5Engine.cpp
-  mainfunction.cpp
+﻿  BlackTargets.cpp
+  BlueTargets.cpp
+  FileReader.cpp
+  GoldTargets.cpp
+  HSObjectL.cpp
+  HSObjectR.cpp
+  HitMarker.cpp
+  MovingButton.cpp
+  MovingText.cpp
+  RedTargets.cpp
   SnakeObject.cpp
+  Spawner.cpp
+  States.cpp
+  Timer.cpp
+  efylw5Engine.cpp
+  mainfunction.cpp
   Generating Code...
-  CourseworkBase.vcxproj -> C:\Users\efylw5\Desktop\GameEngine\CPPCoursework2021-v102\Debug\CourseworkBase2020.exe
+  CourseworkBase.vcxproj -> C:\Users\Brax\Desktop\CPPCoursework2021-v102\Debug\CourseworkBase2020.exe
